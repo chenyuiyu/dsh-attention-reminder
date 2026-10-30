@@ -8,7 +8,7 @@
 ## 安装
 
 ```sh
-dsh plugin --profile <profile> add github:OWNER/dsh-attention-reminder
+dsh plugin --profile <profile> add github:chenyuiyu/dsh-attention-reminder
 ```
 
 DSH Desktop 上也可以在**设置 → 插件**里安装。插件是纯 JavaScript，无需构建、没有依赖。

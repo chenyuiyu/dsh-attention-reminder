@@ -7,7 +7,7 @@ Two independent toggles — **sound** and **popup** — both remembered across r
 ## Install
 
 ```sh
-dsh plugin --profile <profile> add github:OWNER/dsh-attention-reminder
+dsh plugin --profile <profile> add github:chenyuiyu/dsh-attention-reminder
 ```
 
 On DSH Desktop, install it from **Settings → Plugins**. The plugin is plain JavaScript: no build step, no dependencies.

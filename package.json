@@ -5,6 +5,11 @@
   "type": "module",
   "description": "Sound and popup alerts when DSH needs your approval or a confirmation.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chenyuiyu/dsh-attention-reminder.git"
+  },
+  "homepage": "https://github.com/chenyuiyu/dsh-attention-reminder#readme",
   "keywords": [
     "dsh-plugin",
     "deepseek-harness",
