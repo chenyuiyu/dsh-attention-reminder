@@ -20,8 +20,6 @@ window.__ModuleLoader__.load({
 
     const ROUTE = '/api/attention-reminder'
     const POLL_MS = 1000
-    const REPEAT_MS = 4000
-    const REPEAT_MAX = 6
     const SHOW_MAX = 3
     const OVERLAY_SLOT = 'shell.overlay'
     const HEADER_SLOT = 'conversation.session.header.utilities'
@@ -165,8 +163,6 @@ window.__ModuleLoader__.load({
     /* --------------------------------------------------------------- sound */
 
     let audioContext = null
-    let repeatTimer = 0
-    let repeatsLeft = 0
 
     function ensureAudio() {
       try {
@@ -180,6 +176,14 @@ window.__ModuleLoader__.load({
       }
     }
 
+    /**
+     * Play the alert chime once.
+     *
+     * There is deliberately no repeat timer here any more: the previous version
+     * kept re-chiming every 4 s (up to 6 times) while anything stayed pending,
+     * which made a single approval ring three or more times before it was
+     * answered. One chime plus the on-screen card is the whole alert.
+     */
     function chime(attempt) {
       const audio = ensureAudio()
       if (!audio) return
@@ -213,28 +217,6 @@ window.__ModuleLoader__.load({
       } catch {
         /* audio is a nicety, never a blocker */
       }
-    }
-
-    function stopSoundLoop() {
-      if (repeatTimer) {
-        window.clearInterval(repeatTimer)
-        repeatTimer = 0
-      }
-    }
-
-    function startSoundLoop() {
-      stopSoundLoop()
-      repeatsLeft = REPEAT_MAX
-      chime()
-      repeatsLeft -= 1
-      repeatTimer = window.setInterval(() => {
-        if (!store.state.settings.sound || livePending(store.state).length === 0 || repeatsLeft <= 0) {
-          stopSoundLoop()
-          return
-        }
-        repeatsLeft -= 1
-        chime()
-      }, REPEAT_MS)
     }
 
     /* -------------------------------------------------------------- popups */
@@ -282,17 +264,22 @@ window.__ModuleLoader__.load({
       toast(items)
     }
 
+    /**
+     * Announce a batch of newly seen requests.
+     *
+     * Exactly one strike per batch: the pending card stays on screen until it is
+     * answered, so a second ring would only repeat what the card already says.
+     */
     function announce(items) {
       if (!Array.isArray(items) || items.length === 0) return
       const settings = store.state.settings
-      if (settings.sound) startSoundLoop()
+      if (settings.sound) chime()
       if (settings.popup) raiseWindow(items)
     }
 
     function dismiss(id) {
       dismissed.add(id)
       store.emit()
-      if (livePending(store.state).length === 0) stopSoundLoop()
     }
 
     /* ------------------------------------------------------------ transport */

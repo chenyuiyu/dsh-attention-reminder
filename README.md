@@ -16,7 +16,7 @@ On DSH Desktop, install it from **Settings → Plugins**. The plugin is plain Ja
 
 Both live behind the 🔔 button at the right end of the session header.
 
-- **Sound** — one bell strike (WebAudio, ~0.5 s). While something is still waiting it repeats every 4 s, up to 6 times, then stops.
+- **Sound** — one bell strike (WebAudio, ~0.5 s). Each new request chimes exactly once and never repeats; the card stays on screen until you answer it.
 - **Popup** — `window.focus()` to put DSH in front, a floating card above the page naming what is waiting (up to 3 cards, the rest folded into “+N more”), and a system notification where the browser allows one.
 
 The panel also has **Send a test reminder**, which travels the same path as a real alert.

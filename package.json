@@ -1,6 +1,6 @@
 {
   "name": "dsh-attention-reminder",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "type": "module",
   "description": "Sound and popup alerts when DSH needs your approval or a confirmation.",
